@@ -1,0 +1,6 @@
+{
+  "name": "Assignment 5 UCD - NetPulse Edu (Nabyl Jawahir)",
+  "description": "Mockup Desain Persona & Antarmuka Beranda Aplikasi Edukasi Jaringan Komputer - Tugas 5 IMK (UCD) Mahasiswa Nabyl Jawahir NIM 20250040073.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

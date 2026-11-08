@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run NetPulse (Full Java Backend)" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.netpulse.NetPulseApplication" />
+    <module name="netpulse-edu" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

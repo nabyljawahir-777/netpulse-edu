@@ -1,0 +1,35 @@
+name: Deploy NetPulse Edu (Full Java) to Microsoft Azure App Service
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+env:
+  AZURE_WEBAPP_NAME: 'netpulse-edu'
+  JAVA_VERSION: '17'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Build with Maven
+      run: mvn -B clean package --file pom.xml -DskipTests
+
+    - name: Deploy to Azure Web App (Java SE 17)
+      uses: azure/webapps-deploy@v3
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        package: target/*.jar

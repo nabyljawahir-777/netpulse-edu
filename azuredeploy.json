@@ -1,0 +1,98 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "webAppName": {
+      "type": "string",
+      "defaultValue": "netpulse-edu",
+      "metadata": {
+        "description": "Nama unik Web App di Microsoft Azure."
+      }
+    },
+    "sku": {
+      "type": "string",
+      "defaultValue": "F1",
+      "allowedValues": [
+        "F1",
+        "B1",
+        "S1"
+      ],
+      "metadata": {
+        "description": "Pricing tier App Service Plan (F1 Free tier, B1 Basic, S1 Standard)."
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Region data center Microsoft Azure (misal: southeastasia, eastasia)."
+      }
+    }
+  },
+  "variables": {
+    "appServicePlanName": "[concat(parameters('webAppName'), '-plan')]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2022-03-01",
+      "name": "[variables('appServicePlanName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "[parameters('sku')]"
+      },
+      "kind": "linux",
+      "properties": {
+        "reserved": true
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2022-03-01",
+      "name": "[parameters('webAppName')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]"
+      ],
+      "kind": "app,linux",
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
+        "siteConfig": {
+          "linuxFxVersion": "JAVA|17-java17",
+          "appSettings": [
+            {
+              "name": "PORT",
+              "value": "8080"
+            },
+            {
+              "name": "WEBSITES_PORT",
+              "value": "8080"
+            },
+            {
+              "name": "JAVA_OPTS",
+              "value": "-XX:+UseG1GC -Xmx512m"
+            },
+            {
+              "name": "PROJECT_NAME",
+              "value": "NetPulse Edu - Assignment 5"
+            },
+            {
+              "name": "STUDENT_NAME",
+              "value": "Nabyl Jawahir"
+            },
+            {
+              "name": "STUDENT_NIM",
+              "value": "20250040073"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "siteUrl": {
+      "type": "string",
+      "value": "[concat('https://', parameters('webAppName'), '.azurewebsites.net')]"
+    }
+  }
+}

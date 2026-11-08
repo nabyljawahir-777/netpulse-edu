@@ -1,0 +1,34 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "dev",
+      "problemMatcher": [],
+      "label": "npm: dev (Node.js & Express + Vite)",
+      "detail": "Menjalankan backend Express.js dan antarmuka web pada http://localhost:3000",
+      "isBackground": true
+    },
+    {
+      "type": "npm",
+      "script": "build",
+      "problemMatcher": [],
+      "label": "npm: build",
+      "detail": "Kompilasi asset frontend production"
+    },
+    {
+      "type": "shell",
+      "command": "mvn clean compile",
+      "problemMatcher": ["$maven-compiler-plugin"],
+      "label": "mvn: compile (Java Backend)",
+      "detail": "Kompilasi modul backend Java menggunakan Apache Maven"
+    },
+    {
+      "type": "shell",
+      "command": "java -cp target/classes com.netpulse.NetPulseJavaApplication",
+      "problemMatcher": [],
+      "label": "java: run (Standalone Java Server)",
+      "detail": "Menjalankan backend Java server pada port 8080"
+    }
+  ]
+}
