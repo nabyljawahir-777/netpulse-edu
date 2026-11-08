@@ -1,8 +1,28 @@
+# Node.js dependencies
 node_modules/
+
+# Frontend build output
 build/
 dist/
 coverage/
-.DS_Store
-*.log
+
+# Maven build output
+target/
+
+# Local backup
+static-backup-local/
+
+# Environment and secrets
 .env*
 !.env.example
+
+# IDE files
+.idea/
+*.iml
+
+# Operating system
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
