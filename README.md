@@ -10,7 +10,7 @@
 ---
 
 ## 🌟 Arsitektur Sistem: Full Java Backend + Pure HTML & CSS Frontend
-Sesuai arahan, proyek ini dirancang khusus dengan:
+proyek ini dirancang khusus dengan:
 1. **Full Java Backend (Java SE 17+ / Maven)**:
    - Terletak di direktori standar Maven: `src/main/java/com/netpulse/`.
    - Entry point: `com.netpulse.NetPulseApplication` (menjalankan HTTP Server mandiri pada port 8080).
