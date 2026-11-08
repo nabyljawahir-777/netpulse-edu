@@ -688,3 +688,66 @@ footer {
   flex-wrap: wrap;
   gap: 0.5rem;
 }
+
+/* Project Team Footer */
+.team-section {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.team-heading {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--accent-sky);
+  margin-bottom: 0.75rem;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0.75rem;
+}
+
+.team-member {
+  min-width: 0;
+  padding: 0.85rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.team-member:hover {
+  border-color: var(--accent-sky);
+  transform: translateY(-2px);
+}
+
+.team-member-name {
+  display: block;
+  color: var(--text-main);
+  font-weight: 700;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.team-member-nim {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+  .team-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 360px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+}
