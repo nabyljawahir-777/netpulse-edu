@@ -1,21 +1,22 @@
+
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
  */
 
 import React, { useState } from 'react';
-import { 
-  initialCiscoLabAssignment, 
-  beginnerAssignments, 
-  intermediateAssignments, 
-  advancedAssignments, 
-  createDefaultPorts 
+import {
+  initialCiscoLabAssignment,
+  beginnerAssignments,
+  intermediateAssignments,
+  advancedAssignments,
+  createDefaultPorts
 } from './data/labData';
-import { 
-  TopologyDevice, 
-  TopologyLink, 
-  DeviceType, 
-  CableType, 
+import {
+  TopologyDevice,
+  TopologyLink,
+  DeviceType,
+  CableType,
   LabObjective,
   ThemeMode,
   ColorBlindMode,
@@ -26,19 +27,21 @@ import { DeviceGuiModal } from './components/DeviceGuiModal';
 import { ObjectivesPanel } from './components/ObjectivesPanel';
 import { ObjectiveCompletionModal } from './components/ObjectiveCompletionModal';
 import { IdeIntegrationModal } from './components/IdeIntegrationModal';
-import { 
-  Network, 
-  ExternalLink, 
-  Copy, 
-  Check, 
-  Sun, 
-  Moon, 
-  Eye, 
-  Sparkles, 
+import {
+  Network,
+  ExternalLink,
+  Copy,
+  Check,
+  Sun,
+  Moon,
+  Eye,
+  Sparkles,
   BookOpen,
   Zap,
   Flame,
-  Code2
+  Code2,
+  Users,
+  GraduationCap
 } from 'lucide-react';
 
 export default function App() {
@@ -49,7 +52,7 @@ export default function App() {
   // Difficulty & 3-Round Tracking State
   const [difficultyState, setDifficultyState] = useState<{
     difficulty: 'beginner' | 'intermediate' | 'advanced';
-    round: number; // 1, 2, or 3
+    round: number;
   }>({
     difficulty: 'intermediate',
     round: 1,
@@ -74,7 +77,16 @@ export default function App() {
 
   const isDark = theme === 'dark';
 
-  // Helper for applying colorblind CSS filter to entire viewport if desired
+  // Project Team Members
+  const teamMembers = [
+    { name: 'Nabyl Jawahir', nim: '20250040073' },
+    { name: 'Regith Rayabi', nim: '20250040075' },
+    { name: 'M. Nizar Wirapradana', nim: '20250040070' },
+    { name: 'Zidane Putra S', nim: '20250040109' },
+    { name: 'Faizi Fathir', nim: '20250040066' },
+  ];
+
+  // Helper for applying colorblind CSS filter
   const getColorBlindFilterClass = () => {
     switch (colorBlind) {
       case 'protanopia':
@@ -293,11 +305,10 @@ export default function App() {
     setSystemAlert('Topologi jaringan telah direset ke setelan awal praktikum.');
   };
 
-  // RANDOMIZE SPECIFIC DIFFICULTY WITH 3 CYCLING ROUNDS
+  // Randomize difficulty with 3 cycling rounds
   const handleRandomizeDifficulty = (targetDiff: 'beginner' | 'intermediate' | 'advanced') => {
     let nextRound = 1;
     if (difficultyState.difficulty === targetDiff) {
-      // Cycle 1 -> 2 -> 3 -> 1
       nextRound = (difficultyState.round % 3) + 1;
     } else {
       nextRound = 1;
@@ -329,7 +340,10 @@ export default function App() {
   };
 
   const handleCopyUrl = () => {
-    const url = typeof window !== 'undefined' ? window.location.href : 'https://ais-dev-f545yuo24uebex644cvlv2-415332333260.asia-southeast1.run.app';
+    const url = typeof window !== 'undefined'
+      ? window.location.href
+      : 'https://ais-dev-f545yuo24uebex644cvlv2-415332333260.asia-southeast1.run.app';
+
     navigator.clipboard.writeText(url);
     setCopiedLink(true);
     setTimeout(() => setCopiedLink(false), 2000);
@@ -339,15 +353,15 @@ export default function App() {
     <div className={`min-h-screen flex flex-col font-sans transition-all duration-200 ${
       isDark ? 'bg-slate-950 text-slate-100' : 'bg-slate-100 text-slate-900'
     } ${getColorBlindFilterClass()}`}>
-      
+
       {/* Top NetPulse Edu Navigation Bar */}
       <header className={`sticky top-0 z-40 border-b shadow-md transition-colors ${
         isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2.5">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-            
-            {/* Brand Title: NetPulse Edu */}
+
+            {/* Brand Title */}
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-600 via-indigo-600 to-cyan-500 flex items-center justify-center text-white shadow-md">
                 <Network className="w-5 h-5" />
@@ -366,7 +380,7 @@ export default function App() {
 
             {/* Accessibility & Theme Controls */}
             <div className="flex flex-wrap items-center gap-2.5">
-              
+
               {/* Light / Dark Mode Switch */}
               <div className={`flex items-center p-1 rounded-lg border text-xs ${
                 isDark ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-300'
@@ -418,7 +432,7 @@ export default function App() {
                 </select>
               </div>
 
-              {/* Live URL & External Link */}
+              {/* Copy URL */}
               <button
                 onClick={handleCopyUrl}
                 className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg border transition-colors ${
@@ -427,11 +441,13 @@ export default function App() {
                     : 'bg-white hover:bg-slate-100 text-slate-700 border-slate-300'
                 }`}
               >
-                {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+                {copiedLink
+                  ? <Check className="w-3.5 h-3.5 text-emerald-500" />
+                  : <Copy className="w-3.5 h-3.5" />}
                 <span>{copiedLink ? 'Tersalin' : 'Salin URL'}</span>
               </button>
 
-              {/* Direct Pure HTML & CSS Button */}
+              {/* Pure HTML & CSS */}
               <a
                 href="/pure"
                 target="_blank"
@@ -443,7 +459,7 @@ export default function App() {
                 <ExternalLink className="w-3 h-3 text-emerald-400" />
               </a>
 
-              {/* Java Backend & Azure Deployment Modal Guide */}
+              {/* Java Backend & Azure Modal */}
               <button
                 onClick={() => setIsIdeModalOpen(true)}
                 className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-gradient-to-r from-amber-600 via-sky-600 to-indigo-600 hover:from-amber-500 hover:to-indigo-500 rounded-lg shadow-xs transition-all cursor-pointer"
@@ -453,6 +469,7 @@ export default function App() {
                 <span>Java &amp; Azure (IntelliJ)</span>
               </button>
 
+              {/* Open in New Tab */}
               <button
                 onClick={() => window.open(window.location.href, '_blank')}
                 className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-white bg-sky-600 hover:bg-sky-500 rounded-lg shadow-xs transition-colors cursor-pointer"
@@ -462,14 +479,13 @@ export default function App() {
               </button>
 
             </div>
-
           </div>
         </div>
       </header>
 
       {/* Main Container */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-5">
-        
+
         {/* Dynamic System Alert Banner */}
         {systemAlert && (
           <div className={`px-4 py-2.5 rounded-xl border flex items-center justify-between text-xs shadow-xs transition-colors ${
@@ -493,8 +509,8 @@ export default function App() {
 
         {/* Cisco Canvas & LMS Objectives Split */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-          
-          {/* Left Canvas: NetPulse Edu Interactive Cisco Workspace (8 Cols) */}
+
+          {/* Left Canvas */}
           <div className="lg:col-span-8 space-y-4">
             <InteractiveCiscoCanvas
               devices={devices}
@@ -537,7 +553,9 @@ export default function App() {
                   if (pc) setSelectedDevice(pc);
                 }}
                 className={`px-3.5 py-1.5 border rounded-lg font-semibold shrink-0 transition-colors ${
-                  isDark ? 'bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700' : 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300'
+                  isDark
+                    ? 'bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700'
+                    : 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300'
                 }`}
               >
                 Buka GUI Host Client
@@ -545,7 +563,7 @@ export default function App() {
             </div>
           </div>
 
-          {/* Right Panel: LMS Assignment Tracker (4 Cols) */}
+          {/* Right Panel */}
           <div className="lg:col-span-4">
             <ObjectivesPanel
               objectives={objectives}
@@ -562,12 +580,10 @@ export default function App() {
               deadline={activePreset.deadline}
             />
           </div>
-
         </div>
-
       </main>
 
-      {/* Cisco Device GUI Modal with Theme & ColorBlind support */}
+      {/* Cisco Device GUI Modal */}
       {selectedDevice && (
         <DeviceGuiModal
           device={selectedDevice}
@@ -584,7 +600,7 @@ export default function App() {
         />
       )}
 
-      {/* Real-time Objective Completed Popup with Confetti */}
+      {/* Objective Completed Popup */}
       {completedObjectivePopup && (
         <ObjectiveCompletionModal
           objective={completedObjectivePopup}
@@ -613,7 +629,7 @@ export default function App() {
               onClick={() => setActiveHint(null)}
               className="w-full py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg text-xs font-semibold transition-colors"
             >
-              Mengerti & Lanjutkan Praktikum
+              Mengerti &amp; Lanjutkan Praktikum
             </button>
           </div>
         </div>
@@ -630,21 +646,92 @@ export default function App() {
       />
 
       {/* Footer */}
-      <footer className={`border-t py-3 text-xs mt-auto transition-colors ${
-        isDark ? 'bg-slate-900 border-slate-800 text-slate-400' : 'bg-white border-slate-200 text-slate-600'
+      <footer className={`border-t mt-auto transition-colors ${
+        isDark
+          ? 'bg-slate-900 border-slate-800 text-slate-400'
+          : 'bg-white border-slate-200 text-slate-600'
       }`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-sky-500">NetPulse Edu</span>
-            <span>·</span>
-            <span>Interactive Network Topology & Real-time LMS Assignment System</span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-5">
+
+          {/* Project Identity */}
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-sky-600 via-indigo-600 to-cyan-500 flex items-center justify-center text-white">
+                <Network className="w-4 h-4" />
+              </div>
+              <div>
+                <div className="font-bold text-sky-500 text-sm">NetPulse Edu</div>
+                <div className="text-[11px] text-slate-500">
+                  Interactive Network Topology &amp; Real-time LMS Assignment System
+                </div>
+              </div>
+            </div>
+
+            <span className="text-[11px] text-slate-500">
+              Aksesibilitas Aktif: Light/Dark Mode · 3 Tingkat Kesulitan · 3 Putaran
+            </span>
           </div>
-          <span className="text-[11px] text-slate-500">
-            Aksesibilitas Aktif: Light/Dark Mode · 3 Tingkat Kesulitan (Beginner, Intermediate, Advanced - 3 Putaran)
-          </span>
+
+          {/* Project Team Section */}
+          <div className={`border-t pt-5 ${
+            isDark ? 'border-slate-800' : 'border-slate-200'
+          }`}>
+            <div className="flex items-center gap-2 mb-4">
+              <Users className="w-4 h-4 text-sky-500" />
+              <h3 className={`font-bold text-sm ${
+                isDark ? 'text-slate-200' : 'text-slate-800'
+              }`}>
+                Project Team
+              </h3>
+              <span className="text-[10px] text-slate-500">
+                · Anggota Kelompok
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+              {teamMembers.map((member, index) => (
+                <div
+                  key={member.nim}
+                  className={`rounded-xl border p-3 flex items-start gap-3 transition-colors ${
+                    isDark
+                      ? 'bg-slate-950/70 border-slate-800 hover:border-sky-500/50'
+                      : 'bg-slate-50 border-slate-200 hover:border-sky-300'
+                  }`}
+                >
+                  <div className={`w-8 h-8 shrink-0 rounded-lg flex items-center justify-center ${
+                    isDark
+                      ? 'bg-sky-500/10 text-sky-400'
+                      : 'bg-sky-100 text-sky-700'
+                  }`}>
+                    {index === 0
+                      ? <GraduationCap className="w-4 h-4" />
+                      : <Users className="w-4 h-4" />}
+                  </div>
+
+                  <div className="min-w-0">
+                    <p className={`text-xs font-semibold leading-relaxed ${
+                      isDark ? 'text-slate-200' : 'text-slate-800'
+                    }`}>
+                      {member.name}
+                    </p>
+                    <p className="text-[10px] text-slate-500 font-mono mt-1">
+                      {member.nim}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Copyright */}
+          <div className={`border-t pt-3 flex flex-col sm:flex-row items-center justify-between gap-2 text-[10px] text-slate-500 ${
+            isDark ? 'border-slate-800' : 'border-slate-200'
+          }`}>
+            <span>© {new Date().getFullYear()} NetPulse Edu. All rights reserved.</span>
+            <span>Educational Network Simulation Project</span>
+          </div>
         </div>
       </footer>
-
     </div>
   );
 }
