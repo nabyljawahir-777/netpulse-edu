@@ -1,8 +1,8 @@
 # NetPulse Edu - Cisco Packet Tracer & LMS Real-time Simulator
 
 **Tugas 5 Interaksi Manusia & Komputer (User-Centered Design)**  
-- **Nama Mahasiswa**: Nabyl Jawahir  
-- **NIM**: 20250040073  
+- **Nama Mahasiswa**: Nabyl Jawahir, Regith Rayabi, M.Nizar Wirapradana, Zidane Putra Sriyono, Faizi Fathir Widodo
+- **NIM**: 20250040073, 20250040075, 20250040070, 20250040109, 20250040066
 - **Program Studi**: Teknik Informatika (Semester 3)  
 - **Fokus Minat**: Infrastruktur Jaringan & Administrasi Server  
 - **Institusi**: Universitas Nusa Putra, Sukabumi  
